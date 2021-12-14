@@ -7,7 +7,8 @@
 
 import UIKit
 
-class TrackTableCellView: UITableViewCell {
+class TrackTableCellView: UITableViewCell, CellButtonLogoDelegate{
+    
     var displayingTrack : Track?
     var parent : ButtonOnCellDelegate?
     
@@ -71,30 +72,23 @@ class TrackTableCellView: UITableViewCell {
         $0.textColor = UIColor(named: "TextColor")?.withAlphaComponent(0.5)
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
-    let playButton = Init(value: UIButton()){
+    let playButton = Init(value: playPauseButton()){
         $0.tintColor = .black
         $0.backgroundColor = .white
-//        $0.setImage(UIImage(named: "PlayButton"), for: .normal)
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         $0.setImage(UIImage(systemName: "play.fill", withConfiguration: config), for: .normal)
         $0.layer.cornerRadius = 30
         $0.layer.borderWidth = 1
         $0.heightAnchor.constraint(equalToConstant: 60 ).isActive = true
         $0.widthAnchor.constraint(equalTo: $0.heightAnchor, multiplier: 1/1).isActive = true
-        
-//        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
-//        $0.setImage(UIImage(systemName: "ellipsis", withConfiguration: config), for: .normal)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     func setCell(){
         guard let displayingTrack = displayingTrack else {return}
@@ -104,7 +98,11 @@ class TrackTableCellView: UITableViewCell {
     }
 
     @objc func playButtonTouch(_ sender: UIButton!) {
+        playButton.performTwoStateSelection()
         guard let parent = parent else { return }
         parent.buttonTouchedOnCell(aCell: self)
+    }
+    func buttonIsNotPlayingRealChange(isPlaying: Bool) {
+        playButton.performTwoStateSelection()
     }
 }

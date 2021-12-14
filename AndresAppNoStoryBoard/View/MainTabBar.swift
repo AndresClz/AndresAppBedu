@@ -18,6 +18,7 @@ class MainTabBar: UITabBarController,UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         let welcomeVC = UINavigationController(rootViewController: WelcomeView())
         let tracksTableVC = UINavigationController(rootViewController: TrackTableView())
+        let playListDetailVC = UINavigationController(rootViewController: PlayListDetailView())
         
         welcomeVC.navigationController?.navigationBar.prefersLargeTitles = true
         welcomeVC.navigationItem.largeTitleDisplayMode = .always
@@ -31,13 +32,20 @@ class MainTabBar: UITabBarController,UITabBarControllerDelegate {
         tracksTableVC.title = "Library"
         tracksTableVC.navigationBar.topItem?.title = "Library"
         
+        playListDetailVC.navigationController?.navigationBar.prefersLargeTitles = true
+        playListDetailVC.navigationItem.largeTitleDisplayMode = .always
+        playListDetailVC.navigationBar.prefersLargeTitles = true
+        playListDetailVC.title = "Playlist"
+        playListDetailVC.navigationBar.topItem?.title = "Playlist"
+        
         UITabBar.appearance().tintColor = UIColor(named: "TextColor")
+        UITabBar.appearance().barTintColor = UIColor(named: "BackgroundColor")
         //self.tabBar.barTintColor = .clear
-        let controllers = [welcomeVC,tracksTableVC]
+        let controllers = [welcomeVC,tracksTableVC,playListDetailVC]
         self.viewControllers = controllers
         
         guard let items = self.tabBar.items else { return }
-        let images = ["house","music.note"]
+        let images = ["house","music.note","music.note.list"]
 
         for x in 0..<items.count {
             items[x].image = UIImage(systemName: images[x])

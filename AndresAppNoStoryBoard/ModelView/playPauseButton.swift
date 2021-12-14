@@ -8,13 +8,21 @@
 import UIKit
 
 class playPauseButton: UIButton {
+    var isPlaying: Bool = false
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+    let playIcon = (UIImage(systemName: "play.fill"))
+    let pauseIcon = (UIImage(systemName: "pause.fill"))
+    
+    func performTwoStateSelection() {
+        if isPlaying == true {
+            self.isPlaying = !isPlaying
+            self.setImage(playIcon, for: .normal)
+        } else {
+            self.isPlaying = !isPlaying
+            self.setImage(pauseIcon, for: .normal)
+        }
     }
-    */
+
 
 }

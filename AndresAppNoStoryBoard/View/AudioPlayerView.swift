@@ -28,6 +28,7 @@ class AudioPlayerView: UIViewController {
     var isPlaying:Bool = true
     var currentTrack : AudioPlayer?
     var myTimer = Timer()
+    //var myParent: PlayPauseButtonIconDelegate?
     
     
     let trackImage = Init(value: UIImageView()){
@@ -38,17 +39,20 @@ class AudioPlayerView: UIViewController {
         $0.heightAnchor.constraint(equalToConstant: 60 ).isActive = true
         $0.widthAnchor.constraint(equalTo: $0.heightAnchor, multiplier: 1/1).isActive = true
     }
+    
     let dismissButton = Init(value: UIButton()){
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         $0.setImage(UIImage(systemName: "chevron.down", withConfiguration: config), for: .normal)
         $0.tintColor = UIColor(named: "TextColor")
         $0.addTarget(self, action: #selector(dismissMusicPlayerView), for: .touchUpInside)
     }
+    
     let moreButton = Init(value: UIButton()){
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         $0.setImage(UIImage(systemName: "ellipsis", withConfiguration: config), for: .normal)
         $0.tintColor = UIColor(named: "TextColor")
     }
+    
     let trackName = Init(value: UILabel()){
         $0.clipsToBounds = true
         $0.textColor = UIColor(named: "TextColor")
@@ -93,6 +97,8 @@ class AudioPlayerView: UIViewController {
         // Do any additional setup after loading the view.
     }
     override func viewWillDisappear(_ animated: Bool) {
+        isPlaying = false
+        //myParent?.buttonIsNotPlaying(isPlaying: isPlaying)
         super.viewWillDisappear(animated)
         currentTrack?.stop()
     }
@@ -104,6 +110,7 @@ class AudioPlayerView: UIViewController {
             dataTrackStack.axis = .vertical
         }
     }
+    
     
     func configureGIF(){
         if let laURL = Bundle.main.url(forResource: "soundWaves", withExtension: ".gif") {
